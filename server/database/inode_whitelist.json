@@ -1,0 +1,13 @@
+{
+    "uuids": [],
+    "keywords": [
+        "enterprise",
+        "bot",
+        "database",
+        "db",
+        "panel"
+    ],
+    "_comment": "Tambah UUID server atau keyword nama server yang nak skip inode enforcement",
+    "_example_uuid": "87198d5d-81df-4fdd-bb1b-3d571bbd6637",
+    "_example_keyword": "mybot — server bernama 'mybot' akan auto-skip"
+}

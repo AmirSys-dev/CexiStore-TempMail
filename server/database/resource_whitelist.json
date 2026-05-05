@@ -1,0 +1,6 @@
+{
+    "_comment": "Senarai server UUID yang dikecualikan dari CPU/RAM abuse alerts",
+    "_how_to_add": "Tambah UUID server dalam array 'uuids' di bawah",
+    "_example": "uuids: ['xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx']",
+    "uuids": []
+}
