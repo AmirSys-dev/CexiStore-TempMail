@@ -12,25 +12,7 @@ const { createClient } = require('@supabase/supabase-js');
 const webSupabase = createClient(webSupabaseUrl, webSupabaseKey);
 const upload = { single: () => (_req, _res, next) => next() };
 
-function resolveExistingPath(candidates = []) {
-    for (const candidate of candidates) {
-        if (candidate && fs.existsSync(candidate)) return candidate;
-    }
-    return null;
-}
 
-const LOCAL_METHODS_FILE = resolveExistingPath([
-    path.join(__dirname, 'database', 'local_methods.json'),
-    path.join(__dirname, '..', 'config', 'local_methods.json')
-]);
-const METHODS_FILE = resolveExistingPath([
-    path.join(__dirname, '..', 'config', 'methods.json'),
-    LOCAL_METHODS_FILE
-]);
-const BOTNET_DATA_FILE = resolveExistingPath([
-    path.join(__dirname, 'lib', 'botnet.json'),
-    path.join(__dirname, '..', 'config', 'botnet.json')
-]);
 
 const rateLimits = new Map();
 function rateLimit(key, limit, windowMs) {
@@ -1431,25 +1413,6 @@ function detectEndpointType(endpoint) {
     return 'unknown';
 }
 
-app.get('/api/methods', (req, res) => {
-    try {
-        if (!METHODS_FILE) return res.json({ success: true, methods: [] });
-        const methods = JSON.parse(fs.readFileSync(METHODS_FILE, 'utf-8'));
-        res.json({ success: true, methods });
-    } catch (error) {
-        res.json({ success: false, error: error.message });
-    }
-});
-
-app.get('/api/localmethods', (req, res) => {
-    try {
-        if (!LOCAL_METHODS_FILE) return res.json({ success: true, methods: [] });
-        const methods = JSON.parse(fs.readFileSync(LOCAL_METHODS_FILE, 'utf-8'));
-        res.json({ success: true, methods });
-    } catch (error) {
-        res.json({ success: false, error: error.message });
-    }
-});
 
 
 app.post('/api/scan', (req, res) => {
@@ -5184,36 +5147,7 @@ app.get('/api/tempnum2/numbers', async (req, res) => {
 });
 
 
-app.get('/api/console/dashboard', (req, res) => {
-    logger.logFunction('getDashboard', {}, true);
-    const report = logger.getFullReport();
-    res.json({ success: true, ...report });
-});
 
-app.get('/api/console/methods', (req, res) => {
-    logger.logFunction('getMethodsStats', {}, true);
-    const stats = logger.getMethodsStats();
-    res.json({ success: true, ...stats });
-});
-
-app.get('/api/console/activities', (req, res) => {
-    const limit = parseInt(req.query.limit) || 50;
-    logger.logFunction('getActivities', { limit }, true);
-    const activities = logger.getActivityStats();
-    res.json({ success: true, ...activities });
-});
-
-app.get('/api/console/attacks', (req, res) => {
-    logger.logFunction('getAttackStats', {}, true);
-    const attacks = logger.getAttackStats();
-    res.json({ success: true, ...attacks });
-});
-
-app.get('/api/console/functions', (req, res) => {
-    logger.logFunction('getFunctionsStats', {}, true);
-    const functions = logger.getFunctionsStats();
-    res.json({ success: true, ...functions });
-});
 
 app.post('/api/sql/execute', verifyAuth, async (req, res) => {
     const { query } = req.body;

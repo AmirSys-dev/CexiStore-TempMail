@@ -24,16 +24,12 @@ class ConsoleLogger {
     constructor() {
         this.records = {
             functions: new Map(),
-            methods: new Map(),
-            localMethods: new Map(),
-            attacks: [],
             activities: [],
             errors: [],
             api: []
         };
         this.startTime = Date.now();
         this.sessionId = this.generateSessionId();
-        this.loadMethods();
         this.logFile = path.join(__dirname, '..', 'logs', 'activity.log');
         this.ensureLogDirectory();
     }
@@ -46,42 +42,6 @@ class ConsoleLogger {
         const logDir = path.join(__dirname, '..', 'logs');
         if (!fs.existsSync(logDir)) {
             fs.mkdirSync(logDir, { recursive: true });
-        }
-    }
-
-    loadMethods() {
-        try {
-            const methodsPath = path.join(__dirname, '..', 'methods.json');
-            const localMethodsPath = path.join(__dirname, '..', 'local_methods.json');
-            
-            if (fs.existsSync(methodsPath)) {
-                const methods = JSON.parse(fs.readFileSync(methodsPath, 'utf-8'));
-                methods.forEach(m => {
-                    this.records.methods.set(m.name, {
-                        ...m,
-                        callCount: 0,
-                        lastUsed: null,
-                        totalDuration: 0,
-                        errors: 0
-                    });
-                });
-            }
-            
-            if (fs.existsSync(localMethodsPath)) {
-                const localMethods = JSON.parse(fs.readFileSync(localMethodsPath, 'utf-8'));
-                localMethods.forEach(m => {
-                    this.records.localMethods.set(m.name, {
-                        ...m,
-                        callCount: 0,
-                        lastUsed: null,
-                        totalDuration: 0,
-                        errors: 0,
-                        successCount: 0
-                    });
-                });
-            }
-        } catch (error) {
-            this.logError('loadMethods', error);
         }
     }
 
@@ -132,55 +92,6 @@ class ConsoleLogger {
         
         this.printLog('FUNCTION', functionName, params, 'cyan');
         this.writeToFile(`[FUNCTION] ${functionName} - ${JSON.stringify(params)}`);
-        
-        return entry;
-    }
-
-    logMethod(methodName, target, duration, port = 443, userId = null) {
-        const entry = {
-            method: methodName,
-            target: target,
-            port: port,
-            duration: duration,
-            userId: userId,
-            timestamp: this.getTimestamp(),
-            timestampMs: Date.now(),
-            status: 'started'
-        };
-        
-        this.records.attacks.push(entry);
-        
-        if (this.records.methods.has(methodName)) {
-            const methodRecord = this.records.methods.get(methodName);
-            methodRecord.callCount++;
-            methodRecord.lastUsed = this.getTimestamp();
-            methodRecord.totalDuration += parseInt(duration) || 0;
-        }
-        
-        this.printLog('METHOD', methodName, { target, duration, port }, 'magenta');
-        this.writeToFile(`[METHOD] ${methodName} -> ${target}:${port} for ${duration}s`);
-        
-        return entry;
-    }
-
-    logLocalMethod(methodName, params = {}, pid = null) {
-        const entry = {
-            method: methodName,
-            params: params,
-            pid: pid,
-            timestamp: this.getTimestamp(),
-            timestampMs: Date.now(),
-            status: 'running'
-        };
-        
-        if (this.records.localMethods.has(methodName)) {
-            const localRecord = this.records.localMethods.get(methodName);
-            localRecord.callCount++;
-            localRecord.lastUsed = this.getTimestamp();
-        }
-        
-        this.printLog('LOCAL_METHOD', methodName, params, 'yellow');
-        this.writeToFile(`[LOCAL_METHOD] ${methodName} - PID: ${pid || 'N/A'}`);
         
         return entry;
     }
@@ -260,8 +171,6 @@ class ConsoleLogger {
         const colorCode = colors[color] || colors.white;
         const typeColors = {
             'FUNCTION': colors.cyan,
-            'METHOD': colors.magenta,
-            'LOCAL_METHOD': colors.yellow,
             'ACTIVITY': colors.green,
             'API': colors.blue,
             'ERROR': colors.red,
@@ -282,40 +191,6 @@ class ConsoleLogger {
             fs.appendFileSync(this.logFile, logLine);
         } catch (error) {
         }
-    }
-
-    getMethodsStats() {
-        const stats = {
-            methods: [],
-            localMethods: [],
-            totalCalls: 0,
-            mostUsed: null
-        };
-        
-        this.records.methods.forEach((value, key) => {
-            stats.methods.push({
-                name: key,
-                ...value
-            });
-            stats.totalCalls += value.callCount;
-        });
-        
-        this.records.localMethods.forEach((value, key) => {
-            stats.localMethods.push({
-                name: key,
-                ...value
-            });
-            stats.totalCalls += value.callCount;
-        });
-        
-        const allMethods = [...stats.methods, ...stats.localMethods];
-        if (allMethods.length > 0) {
-            stats.mostUsed = allMethods.reduce((prev, current) => 
-                (prev.callCount > current.callCount) ? prev : current
-            );
-        }
-        
-        return stats;
     }
 
     getFunctionsStats() {
@@ -355,30 +230,13 @@ class ConsoleLogger {
         };
     }
 
-    getAttackStats() {
-        const now = Date.now();
-        const ongoing = this.records.attacks.filter(a => {
-            const endTime = a.timestampMs + (parseInt(a.duration) * 1000);
-            return endTime > now;
-        });
-        
-        return {
-            total: this.records.attacks.length,
-            ongoing: ongoing.length,
-            ongoingDetails: ongoing,
-            recent: this.records.attacks.slice(-10)
-        };
-    }
-
     getFullReport() {
         return {
             sessionId: this.sessionId,
             uptime: this.formatUptime(),
             timestamp: this.getTimestamp(),
-            methods: this.getMethodsStats(),
             functions: this.getFunctionsStats(),
             activities: this.getActivityStats(),
-            attacks: this.getAttackStats(),
             errors: {
                 total: this.records.errors.length,
                 recent: this.records.errors.slice(-5)
@@ -403,25 +261,11 @@ class ConsoleLogger {
         console.log(`${colors.cyan}║${colors.reset} ${colors.yellow}Uptime:${colors.reset}  ${report.uptime}`);
         console.log(`${colors.cyan}╠${thinDivider}╣${colors.reset}`);
         
-        console.log(`${colors.cyan}║${colors.reset} ${colors.green}[METHODS STATS]${colors.reset}`);
-        console.log(`${colors.cyan}║${colors.reset}   Total Calls: ${report.methods.totalCalls}`);
-        console.log(`${colors.cyan}║${colors.reset}   API Methods: ${report.methods.methods.length}`);
-        console.log(`${colors.cyan}║${colors.reset}   Local Methods: ${report.methods.localMethods.length}`);
-        if (report.methods.mostUsed) {
-            console.log(`${colors.cyan}║${colors.reset}   Most Used: ${report.methods.mostUsed.name} (${report.methods.mostUsed.callCount} calls)`);
-        }
-        console.log(`${colors.cyan}╠${thinDivider}╣${colors.reset}`);
-        
         console.log(`${colors.cyan}║${colors.reset} ${colors.blue}[FUNCTIONS STATS]${colors.reset}`);
         console.log(`${colors.cyan}║${colors.reset}   Total Functions: ${report.functions.functions.length}`);
         console.log(`${colors.cyan}║${colors.reset}   Total Calls: ${report.functions.totalCalls}`);
         console.log(`${colors.cyan}║${colors.reset}   Total Errors: ${report.functions.totalErrors}`);
         console.log(`${colors.cyan}║${colors.reset}   Avg Duration: ${report.functions.avgDuration}ms`);
-        console.log(`${colors.cyan}╠${thinDivider}╣${colors.reset}`);
-        
-        console.log(`${colors.cyan}║${colors.reset} ${colors.magenta}[ATTACKS]${colors.reset}`);
-        console.log(`${colors.cyan}║${colors.reset}   Total: ${report.attacks.total}`);
-        console.log(`${colors.cyan}║${colors.reset}   Ongoing: ${report.attacks.ongoing}`);
         console.log(`${colors.cyan}╠${thinDivider}╣${colors.reset}`);
         
         console.log(`${colors.cyan}║${colors.reset} ${colors.green}[ACTIVITIES]${colors.reset}`);
@@ -433,30 +277,6 @@ class ConsoleLogger {
         console.log(`${colors.cyan}║${colors.reset} ${colors.blue}[API CALLS]${colors.reset} Total: ${report.api.total}`);
         
         console.log(`${colors.cyan}╚${divider}╝${colors.reset}\n`);
-    }
-
-    printMethodsList() {
-        const stats = this.getMethodsStats();
-        
-        console.log(`\n${colors.magenta}╔${'═'.repeat(70)}╗${colors.reset}`);
-        console.log(`${colors.magenta}║${colors.reset} ${colors.bright}METHODS & LOCAL METHODS RECORDS${colors.reset}${' '.repeat(37)}${colors.magenta}║${colors.reset}`);
-        console.log(`${colors.magenta}╠${'═'.repeat(70)}╣${colors.reset}`);
-        
-        console.log(`${colors.magenta}║${colors.reset} ${colors.yellow}[API METHODS]${colors.reset}`);
-        stats.methods.forEach(m => {
-            const status = m.sts === 'ON' ? `${colors.green}ON${colors.reset}` : `${colors.red}OFF${colors.reset}`;
-            console.log(`${colors.magenta}║${colors.reset}   ${m.name.padEnd(15)} | Calls: ${String(m.callCount).padEnd(5)} | Status: ${status}`);
-        });
-        
-        console.log(`${colors.magenta}╠${'─'.repeat(70)}╣${colors.reset}`);
-        
-        console.log(`${colors.magenta}║${colors.reset} ${colors.cyan}[LOCAL METHODS]${colors.reset}`);
-        stats.localMethods.forEach(m => {
-            const status = m.sts === 'ON' ? `${colors.green}ON${colors.reset}` : `${colors.red}OFF${colors.reset}`;
-            console.log(`${colors.magenta}║${colors.reset}   ${m.name.padEnd(15)} | Calls: ${String(m.callCount).padEnd(5)} | Type: ${m.type} | ${status}`);
-        });
-        
-        console.log(`${colors.magenta}╚${'═'.repeat(70)}╝${colors.reset}\n`);
     }
 
     printRecentActivity(limit = 10) {
