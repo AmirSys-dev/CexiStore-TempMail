@@ -306,8 +306,8 @@ export default function Navbar() {
           font-size: 12px;
           font-weight: 800;
           color: #fff;
-          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-          box-shadow: 0 8px 18px rgba(99, 102, 241, 0.36);
+          background: var(--gradient-primary);
+          box-shadow: var(--shadow-sm);
         }
 
         .nav-desktop {
@@ -341,7 +341,7 @@ export default function Navbar() {
         }
 
         .nav-link:hover {
-          background: rgba(99, 102, 241, 0.1);
+          background: var(--primary-light);
           color: var(--primary);
         }
 
@@ -352,8 +352,8 @@ export default function Navbar() {
 
         .nav-link.active {
           color: #fff;
-          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-          box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+          background: var(--gradient-primary);
+          box-shadow: var(--shadow-sm);
         }
 
         .nav-actions {
@@ -382,7 +382,7 @@ export default function Navbar() {
 
         .nav-theme-toggle:hover {
           color: var(--primary);
-          background: rgba(99, 102, 241, 0.1);
+          background: var(--primary-light);
         }
 
         .nav-theme-toggle:focus-visible,
@@ -417,9 +417,9 @@ export default function Navbar() {
 
         .btn-signin {
           color: #fff !important;
-          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+          background: var(--gradient-primary) !important;
           border-color: transparent !important;
-          box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
+          box-shadow: var(--shadow-sm);
         }
 
         /* Mobile Navigation */
@@ -442,7 +442,7 @@ export default function Navbar() {
         }
 
         .nav-menu-btn:hover {
-          background: rgba(99, 102, 241, 0.1);
+          background: var(--primary-light);
           color: var(--primary);
         }
 
@@ -508,25 +508,25 @@ export default function Navbar() {
         }
 
         .nav-mobile-link:hover {
-          background: rgba(99, 102, 241, 0.12);
+          background: var(--primary-light);
           color: var(--primary);
         }
 
         .nav-mobile-link:focus-visible {
-          background: rgba(99, 102, 241, 0.12);
+          background: var(--primary-light);
           color: var(--primary);
         }
 
         .nav-mobile-link.active {
           color: #fff;
-          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          background: var(--gradient-primary);
           font-weight: 700;
         }
 
         .nav-mobile-link.primary {
           color: #fff;
           font-weight: 700;
-          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          background: var(--gradient-primary);
         }
 
         .nav-mobile-link.danger {

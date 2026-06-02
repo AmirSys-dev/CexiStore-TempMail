@@ -112,7 +112,7 @@ export default function PricingPage() {
               <motion.div
                 animate={{ scale: step === s ? 1.15 : 1 }}
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all`}
-                style={step >= s ? { background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', boxShadow: '0 4px 12px rgba(99,102,241,0.3)' } : { background: 'var(--gray-bg)', color: 'var(--text-muted)' }}
+                style={step >= s ? { background: 'var(--gradient-primary)', color: '#fff', boxShadow: 'var(--shadow-sm)' } : { background: 'var(--gray-bg)', color: 'var(--text-muted)' }}
               >
                 {s}
               </motion.div>
@@ -130,14 +130,14 @@ export default function PricingPage() {
                   const sel = selectedPlan === plan.id;
                   return (
                     <motion.div key={plan.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
-                      whileHover={{ y: -4, boxShadow: '0 12px 32px rgba(99,102,241,0.12)' }} whileTap={{ scale: 0.99 }}
+                      whileHover={{ y: -4, boxShadow: 'var(--shadow-md)' }} whileTap={{ scale: 0.99 }}
                       onClick={() => setSelectedPlan(plan.id)}
                       className={`p-7 rounded-xl cursor-pointer transition-all relative overflow-hidden border-2`}
-                      style={sel ? { borderColor: 'var(--primary)', background: 'rgba(99,102,241,0.04)', boxShadow: '0 0 0 3px var(--primary-glow)' } : { borderColor: 'var(--gray-border)', background: 'var(--white)' }}>
+                      style={sel ? { borderColor: 'var(--primary)', background: 'var(--primary-light)', boxShadow: '0 0 0 3px var(--primary-glow)' } : { borderColor: 'var(--gray-border)', background: 'var(--white)' }}>
                       {plan.badge && (
-                        <div style={{ position: 'absolute', top: '12px', right: '12px', padding: '3px 10px', borderRadius: '99px', background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08))', border: '1px solid rgba(99,102,241,0.15)', fontSize: '10px', fontWeight: 800, color: 'var(--primary)' }}>{plan.badge}</div>
+                        <div style={{ position: 'absolute', top: '12px', right: '12px', padding: '3px 10px', borderRadius: '99px', background: 'var(--primary-light)', border: '1px solid var(--gray-border)', fontSize: '10px', fontWeight: 800, color: 'var(--primary)' }}>{plan.badge}</div>
                       )}
-                      <div className="flex items-center justify-center w-11 h-11 rounded-lg mb-4" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08))', border: '1px solid rgba(99,102,241,0.12)' }}>
+                      <div className="flex items-center justify-center w-11 h-11 rounded-lg mb-4" style={{ background: 'var(--primary-light)', border: '1px solid var(--gray-border)' }}>
                         <Icon size={22} style={{ color: 'var(--primary)' }} />
                       </div>
                       <h3 className="text-lg font-black mb-1">{plan.name}</h3>
@@ -153,7 +153,7 @@ export default function PricingPage() {
                           </div>
                         ))}
                       </div>
-                      {sel && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-3 left-3 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}><CheckCircle size={14} color="#fff" /></motion.div>}
+                      {sel && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-3 left-3 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: 'var(--gradient-primary)' }}><CheckCircle size={14} color="#fff" /></motion.div>}
                     </motion.div>
                   );
                 })}

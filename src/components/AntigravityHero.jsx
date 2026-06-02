@@ -46,7 +46,7 @@ export default function AntigravityHero({ children }) {
 
     // Enterprise aesthetic bodies (squares & specific shapes)
     const objects = [];
-    const colors = ['#3b82f6', '#10b981', '#6366f1', '#0ea5e9', '#ec4899', '#f43f5e'];
+    const colors = ['#0f172a', '#334155', '#475569', '#94a3b8', '#cbd5e1', '#ffffff'];
     
     for (let i = 0; i < 25; i++) {
       const x = Math.random() * width;

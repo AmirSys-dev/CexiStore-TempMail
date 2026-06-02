@@ -64,9 +64,9 @@ export default function LandingPage() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             style={{ maxWidth: '760px' }}
           >
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '99px', background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.15)', marginBottom: '20px' }}>
-              <Sparkles size={14} style={{ color: '#6366f1' }} />
-              <span style={{ fontSize: '12px', fontWeight: 700, color: '#6366f1', letterSpacing: '0.5px' }}>CEXISTORE PRIVACY CLOUD</span>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '99px', background: 'var(--primary-light)', border: '1px solid var(--gray-border)', marginBottom: '20px' }}>
+              <Sparkles size={14} style={{ color: 'var(--primary)' }} />
+              <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--primary)', letterSpacing: '0.5px' }}>CEXISTORE PRIVACY CLOUD</span>
             </div>
 
             <h1 style={{
@@ -79,7 +79,7 @@ export default function LandingPage() {
             }}>
               Temporary email{' '}
               <span style={{
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa)',
+                background: 'var(--gradient-primary)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -181,13 +181,13 @@ export default function LandingPage() {
                   cursor: 'default',
                   transition: 'border-color 0.2s ease',
                 }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'}
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary)'}
                 onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--gray-border)'}
               >
                 <div style={{
                   width: '44px', height: '44px', borderRadius: '12px',
-                  background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08))',
-                  border: '1px solid rgba(99,102,241,0.12)',
+                  background: 'var(--primary-light)',
+                  border: '1px solid var(--gray-border)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                 }}>
                   <feature.icon size={20} style={{ color: 'var(--primary)' }} />
@@ -214,8 +214,8 @@ export default function LandingPage() {
           <div style={{
             padding: '48px 32px',
             borderRadius: '24px',
-            background: 'linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(139,92,246,0.04) 100%)',
-            border: '1px solid rgba(99,102,241,0.12)',
+            background: 'var(--primary-light)',
+            border: '1px solid var(--gray-border)',
           }}>
             <h2 style={{ fontSize: '28px', fontWeight: 900, letterSpacing: '-1px', marginBottom: '12px', color: 'var(--text-main)' }}>
               Ready to get started?

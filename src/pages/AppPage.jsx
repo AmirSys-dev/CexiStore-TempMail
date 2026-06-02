@@ -27,7 +27,7 @@ function confetti() {
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
-  const colors = ['#6366f1', '#818cf8', '#8b5cf6', '#a78bfa', '#c4b5fd'];
+  const colors = ['#0f172a', '#334155', '#475569', '#94a3b8', '#cbd5e1', '#f1f5f9', '#ffffff'];
   for (let i = 0; i < 30; i++) {
     const el = document.createElement('div');
     el.className = 'confetti-piece';

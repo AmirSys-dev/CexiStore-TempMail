@@ -130,22 +130,22 @@ export default function AuthPage() {
         borderRadius: '24px',
         padding: '40px 32px',
         textAlign: 'center',
-        boxShadow: '0 24px 48px rgba(99, 102, 241, 0.08), 0 4px 12px rgba(0,0,0,0.04)',
+        boxShadow: 'var(--shadow-lg)',
       }}>
         {/* Subtle glow border on top */}
         <div style={{
           position: 'absolute', top: '-1px', left: '20%', right: '20%', height: '3px',
-          background: 'linear-gradient(90deg, transparent, rgba(99,102,241,0.4), rgba(139,92,246,0.4), transparent)',
+          background: 'linear-gradient(90deg, transparent, var(--primary), transparent)',
           borderRadius: '0 0 4px 4px',
         }} />
 
         {/* Logo */}
         <div style={{
           width: '60px', height: '60px', borderRadius: '16px',
-          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+          background: 'var(--gradient-primary)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           margin: '0 auto 20px',
-          boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
+          boxShadow: 'var(--shadow-sm)',
         }}>
           <Mail size={26} color="#fff" />
         </div>
