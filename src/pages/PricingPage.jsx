@@ -98,7 +98,7 @@ export default function PricingPage() {
         <AnimSection>
           <div className="text-center mb-4">
             <h1 className="font-black text-main mb-3" style={{ fontSize: 'clamp(28px, 5vw, 42px)', letterSpacing: '-1.5px', lineHeight: 1.1 }}>
-              Choose a plan
+              Choose a <span className="gradient-text">plan</span>
             </h1>
             <p className="text-sub text-sm max-w-md mx-auto">
               Upgrade to unlock more tokens, features, and priority support.
@@ -111,13 +111,12 @@ export default function PricingPage() {
             <React.Fragment key={s}>
               <motion.div
                 animate={{ scale: step === s ? 1.15 : 1 }}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all ${
-                  step >= s ? 'bg-main text-[var(--white)]' : 'bg-gray-bg text-muted'
-                }`}
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all`}
+                style={step >= s ? { background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', boxShadow: '0 4px 12px rgba(99,102,241,0.3)' } : { background: 'var(--gray-bg)', color: 'var(--text-muted)' }}
               >
                 {s}
               </motion.div>
-              {s < 3 && <div className={`w-10 h-0.5 transition-all rounded ${step > s ? 'bg-main' : 'bg-gray-border'}`} />}
+              {s < 3 && <div className={`w-10 h-0.5 transition-all rounded`} style={{ background: step > s ? 'var(--primary)' : 'var(--gray-border)' }} />}
             </React.Fragment>
           ))}
         </div>
@@ -131,31 +130,30 @@ export default function PricingPage() {
                   const sel = selectedPlan === plan.id;
                   return (
                     <motion.div key={plan.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
-                      whileHover={{ y: -2 }} whileTap={{ scale: 0.99 }}
+                      whileHover={{ y: -4, boxShadow: '0 12px 32px rgba(99,102,241,0.12)' }} whileTap={{ scale: 0.99 }}
                       onClick={() => setSelectedPlan(plan.id)}
-                      className={`p-7 rounded-xl cursor-pointer transition-all relative overflow-hidden border-2 ${
-                        sel ? 'border-main bg-gray-bg' : 'border-gray-border bg-[var(--white)]'
-                      }`}>
+                      className={`p-7 rounded-xl cursor-pointer transition-all relative overflow-hidden border-2`}
+                      style={sel ? { borderColor: 'var(--primary)', background: 'rgba(99,102,241,0.04)', boxShadow: '0 0 0 3px var(--primary-glow)' } : { borderColor: 'var(--gray-border)', background: 'var(--white)' }}>
                       {plan.badge && (
-                        <div className="absolute top-3 right-3 px-2 py-1 rounded border border-gray-border text-[10px] font-black text-muted bg-[var(--white)]">{plan.badge}</div>
+                        <div style={{ position: 'absolute', top: '12px', right: '12px', padding: '3px 10px', borderRadius: '99px', background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08))', border: '1px solid rgba(99,102,241,0.15)', fontSize: '10px', fontWeight: 800, color: 'var(--primary)' }}>{plan.badge}</div>
                       )}
-                      <div className="flex items-center justify-center w-11 h-11 rounded-lg mb-4 bg-gray-bg border border-gray-border">
-                        <Icon size={22} className="text-main" />
+                      <div className="flex items-center justify-center w-11 h-11 rounded-lg mb-4" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08))', border: '1px solid rgba(99,102,241,0.12)' }}>
+                        <Icon size={22} style={{ color: 'var(--primary)' }} />
                       </div>
                       <h3 className="text-lg font-black mb-1">{plan.name}</h3>
                       <div className="flex items-baseline gap-1 mb-1">
-                        <span className="text-4xl font-black text-main">{plan.price}</span>
+                        <span className="text-4xl font-black" style={{ color: 'var(--primary)' }}>{plan.price}</span>
                         <span className="text-xs text-muted">/one-time</span>
                       </div>
                       <p className="text-xs text-sub mb-4 font-semibold">{plan.tokens}</p>
                       <div className="flex flex-col gap-2">
                         {plan.features.map(f => (
                           <div key={f} className="flex items-center gap-2 text-xs text-sub">
-                            <CheckCircle size={14} className="text-main flex-shrink-0" /> {f}
+                            <CheckCircle size={14} style={{ color: 'var(--primary)' }} className="flex-shrink-0" /> {f}
                           </div>
                         ))}
                       </div>
-                      {sel && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-3 left-3 w-6 h-6 rounded-full flex items-center justify-center bg-main"><CheckCircle size={14} className="text-[var(--white)]" /></motion.div>}
+                      {sel && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-3 left-3 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}><CheckCircle size={14} color="#fff" /></motion.div>}
                     </motion.div>
                   );
                 })}
@@ -254,8 +252,8 @@ export default function PricingPage() {
             <motion.div key="s3" variants={sv} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
               <div className="text-center mx-auto max-w-sm my-10">
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200 }}>
-                  <div className="w-18 h-18 bg-success rounded-full flex items-center justify-center mx-auto mb-5">
-                    <CheckCircle size={36} className="text-[var(--white)]" />
+                  <div className="w-18 h-18 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: 'linear-gradient(135deg, #10b981, #059669)', width: '72px', height: '72px', boxShadow: '0 8px 24px rgba(16,185,129,0.3)' }}>
+                    <CheckCircle size={36} color="#fff" />
                   </div>
                 </motion.div>
                 <h2 className="text-2xl font-black mb-2.5">Order Submitted!</h2>

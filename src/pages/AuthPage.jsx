@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { Mail, ArrowLeft } from 'lucide-react';
+import { Mail, ArrowLeft, Shield } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
 
@@ -78,41 +78,100 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="ios-page bg-gray-bg flex items-center justify-center min-h-screen p-5 relative">
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '24px',
+      position: 'relative',
+      overflow: 'hidden',
+      background: 'var(--gray-bg)',
+    }}>
+      
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 0,
+        background: 'radial-gradient(ellipse at 30% 30%, rgba(99,102,241,0.1) 0%, transparent 50%), radial-gradient(ellipse at 70% 70%, rgba(139,92,246,0.07) 0%, transparent 50%)',
+      }} />
+      <div style={{
+        position: 'absolute', top: '-20%', right: '-15%', width: '420px', height: '420px', zIndex: 0,
+        borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)',
+        filter: 'blur(80px)',
+      }} />
+      <div style={{
+        position: 'absolute', bottom: '-15%', left: '-10%', width: '340px', height: '340px', zIndex: 0,
+        borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%)',
+        filter: 'blur(60px)',
+      }} />
+
       {/* Back Button */}
       <button
         onClick={() => navigate('/')}
-        className="absolute bg-white border border-main rounded-sm p-2 flex items-center justify-center focus-visible-ring"
-        style={{ top: '24px', left: '24px' }}
+        style={{
+          position: 'absolute', top: '24px', left: '24px', zIndex: 2,
+          width: '42px', height: '42px', borderRadius: '12px',
+          background: 'var(--white)', border: '1px solid var(--gray-border)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer', transition: 'all 0.2s ease',
+        }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.boxShadow = '0 0 0 3px var(--primary-glow)'; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--gray-border)'; e.currentTarget.style.boxShadow = 'none'; }}
         aria-label="Go back"
       >
-        <ArrowLeft size={20} className="text-main" />
+        <ArrowLeft size={18} style={{ color: 'var(--text-main)' }} />
       </button>
 
-      {/* Auth Panel */}
-      <div
-        className="w-full px-6 text-center bg-white border border-main rounded-md shadow-sm"
-        style={{ maxWidth: '420px', paddingTop: '36px', paddingBottom: '36px' }}
-      >
-        <div
-          className="bg-primary rounded-sm flex items-center justify-center mx-auto mb-5"
-          style={{ width: '56px', height: '56px' }}
-        >
-          <Mail size={24} className="text-white" />
+      {/* Auth Card */}
+      <div style={{
+        position: 'relative', zIndex: 1,
+        width: '100%', maxWidth: '420px',
+        background: 'var(--white)',
+        border: '1px solid var(--gray-border)',
+        borderRadius: '24px',
+        padding: '40px 32px',
+        textAlign: 'center',
+        boxShadow: '0 24px 48px rgba(99, 102, 241, 0.08), 0 4px 12px rgba(0,0,0,0.04)',
+      }}>
+        {/* Subtle glow border on top */}
+        <div style={{
+          position: 'absolute', top: '-1px', left: '20%', right: '20%', height: '3px',
+          background: 'linear-gradient(90deg, transparent, rgba(99,102,241,0.4), rgba(139,92,246,0.4), transparent)',
+          borderRadius: '0 0 4px 4px',
+        }} />
+
+        {/* Logo */}
+        <div style={{
+          width: '60px', height: '60px', borderRadius: '16px',
+          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 20px',
+          boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
+        }}>
+          <Mail size={26} color="#fff" />
         </div>
 
-        <h1 className="text-2xl font-black tracking-tight text-main mb-2">
+        <h1 style={{ fontSize: '24px', fontWeight: 900, letterSpacing: '-0.8px', marginBottom: '8px', color: 'var(--text-main)' }}>
           Welcome back
         </h1>
-        <p className="text-sm text-sub mb-6 leading-relaxed">
-          Sign in to access your dashboard.
+        <p style={{ fontSize: '14px', color: 'var(--text-sub)', marginBottom: '28px', lineHeight: 1.5 }}>
+          Sign in to access your privacy dashboard.
         </p>
 
-        <div className="stack-sm">
+        {/* Social Login Buttons */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <button
             onClick={() => handleSocialLogin('github')}
             disabled={loading}
-            className="btn btn-primary w-full flex items-center justify-center gap-2 focus-visible-ring"
+            style={{
+              width: '100%', padding: '13px 20px', borderRadius: '14px',
+              background: '#0f172a', color: '#fff', border: 'none',
+              fontSize: '14px', fontWeight: 700, cursor: loading ? 'wait' : 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+              transition: 'all 0.2s ease', opacity: loading ? 0.7 : 1,
+              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.2)',
+            }}
+            onMouseEnter={e => { if (!loading) { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(15, 23, 42, 0.3)'; }}}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(15, 23, 42, 0.2)'; }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
@@ -123,7 +182,16 @@ export default function AuthPage() {
           <button
             onClick={() => handleSocialLogin('google')}
             disabled={loading}
-            className="btn btn-secondary w-full flex items-center justify-center gap-2 focus-visible-ring"
+            style={{
+              width: '100%', padding: '13px 20px', borderRadius: '14px',
+              background: 'var(--white)', color: 'var(--text-main)',
+              border: '1px solid var(--gray-border)',
+              fontSize: '14px', fontWeight: 700, cursor: loading ? 'wait' : 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+              transition: 'all 0.2s ease', opacity: loading ? 0.7 : 1,
+            }}
+            onMouseEnter={e => { if (!loading) { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.boxShadow = '0 0 0 3px var(--primary-glow)'; }}}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--gray-border)'; e.currentTarget.style.boxShadow = 'none'; }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
@@ -135,9 +203,21 @@ export default function AuthPage() {
           </button>
         </div>
 
-        <p className="text-xs text-muted" style={{ marginTop: '24px' }}>
+        {/* Trust badge */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+          marginTop: '24px', padding: '10px', borderRadius: '12px',
+          background: 'rgba(99, 102, 241, 0.04)',
+        }}>
+          <Shield size={14} style={{ color: 'var(--primary)' }} />
+          <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 600 }}>
+            Secured with end-to-end encryption
+          </span>
+        </div>
+
+        <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '16px' }}>
           By signing in, you agree to our{' '}
-          <a href="/terms" className="text-main font-bold no-underline hover:underline focus-visible-ring rounded-xs px-1">
+          <a href="/terms" style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'none' }}>
             Terms of Service
           </a>
           .

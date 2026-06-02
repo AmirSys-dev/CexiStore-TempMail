@@ -94,7 +94,7 @@ export default function BlackholeSupernova() {
         }} />
       )}
 
-      {/* === BLACK HOLE widget — rendered in hero section === */}
+      
       {(phase === 'idle' || phase === 'ignition') && (
         <div style={{
           position: 'fixed',

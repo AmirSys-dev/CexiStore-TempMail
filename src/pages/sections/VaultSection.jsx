@@ -74,7 +74,7 @@ export default function VaultSection({
       className="p-5"
     >
       {/* Token Balance Card */}
-      <div className="identity-card mb-4 border border-slate-300 bg-slate-100 shadow-none">
+      <div className="identity-card mb-4">
         <div className="section-label opacity-40">TOKEN BALANCE</div>
         <div className="flex items-baseline gap-2 my-2">
           <motion.span

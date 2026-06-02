@@ -201,17 +201,13 @@ export default function ToolsPage() {
           )}
         </div>
 
-        <div className="flex gap-1.5 mb-6 overflow-x-auto pb-1">
+        <div className="tabnav-root mb-6">
           {TABS.map(tab => {
             const Icon = tab.icon;
             const active = activeTab === tab.id;
             return (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                className={`px-3.5 py-2.5 rounded-md border-2 flex items-center gap-1.5 whitespace-nowrap text-xs font-bold transition-all ${
-                  active
-                    ? 'border-main bg-gray-bg text-main'
-                    : 'border-gray-border bg-[var(--white)] text-sub hover:border-main'
-                }`}>
+                className={`tabnav-item ${active ? 'active' : ''} flex items-center gap-1.5 cursor-pointer`}>
                 <Icon size={14} /> {tab.label}
               </button>
             );
@@ -219,7 +215,7 @@ export default function ToolsPage() {
         </div>
 
         <AnimatePresence mode="wait">
-          {/* ===== DOWNLOADER TAB ===== */}
+          
           {activeTab === 'downloader' && (
             <motion.div key="dl" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -2 }} transition={{ duration: 0.2 }}>
               {!isPremium ? <PremiumGate navigate={navigate} /> : (
@@ -304,7 +300,7 @@ export default function ToolsPage() {
             </motion.div>
           )}
 
-          {/* ===== CANVA GENERATOR TAB ===== */}
+          
           {activeTab === 'canva' && (
             <motion.div key="canva" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -2 }} transition={{ duration: 0.2 }}>
               {!isPremium ? <PremiumGate navigate={navigate} /> : (
@@ -361,7 +357,7 @@ export default function ToolsPage() {
             </motion.div>
           )}
 
-          {/* ===== ALIGHT MOTION GENERATOR TAB ===== */}
+          
           {activeTab === 'alight' && (
             <motion.div key="alight" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -2 }} transition={{ duration: 0.2 }}>
               {!isPremium ? <PremiumGate navigate={navigate} /> : (
@@ -418,7 +414,7 @@ export default function ToolsPage() {
             </motion.div>
           )}
 
-          {/* ===== VIRTUAL NUMBERS TAB ===== */}
+          
           {activeTab === 'numbers' && (
             <motion.div key="nums" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -2 }} transition={{ duration: 0.2 }}>
               <div className="mb-5">

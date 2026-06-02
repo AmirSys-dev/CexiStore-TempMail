@@ -109,26 +109,7 @@ INSERT INTO bot_functions (function_name, description, category) VALUES
     ('nodeactive', 'Toggle node active', 'node'),
     ('nodeunlis', 'Toggle node unlis', 'node'),
     
-    -- ATTACK METHODS
-    ('methods', 'Show attack methods', 'attack'),
-    ('l7', 'Layer 7 attack', 'attack'),
-    ('l4', 'Layer 4 attack', 'attack'),
-    ('http', 'HTTP attack', 'attack'),
-    ('locall7', 'Local Layer 7 attack', 'attack'),
-    ('locall4', 'Local Layer 4 attack', 'attack'),
-    ('local7', 'Local 7 methods', 'attack'),
-    ('local4', 'Local 4 methods', 'attack'),
-    ('localmethods', 'Local methods list', 'attack'),
-    ('double', 'Double attack', 'attack'),
-    ('running', 'Running attacks', 'attack'),
-    ('stop', 'Stop attack', 'attack'),
-    ('stopall', 'Stop all attacks', 'attack'),
     
-    -- BOTNET MANAGEMENT
-    ('addbot', 'Add bot to botnet', 'botnet'),
-    ('delbot', 'Delete bot from botnet', 'botnet'),
-    ('testbot', 'Test bot connection', 'botnet'),
-    ('listbot', 'List all bots', 'botnet'),
     
     -- TOOLS
     ('tempmail', 'Generate temp email', 'tools'),
@@ -168,10 +149,6 @@ INSERT INTO bot_functions (function_name, description, category) VALUES
     ('swings', 'Start wings shortcut', 'wings'),
     ('uninstallwings', 'Uninstall wings', 'wings'),
     
-    -- PROXY
-    ('scrapeproxy', 'Scrape proxies', 'proxy'),
-    ('proxystat', 'Proxy statistics', 'proxy'),
-    ('proxystats', 'Proxy statistics', 'proxy'),
     
     -- TRANSFER
     ('all', 'Transfer all', 'transfer'),
@@ -202,42 +179,36 @@ ON CONFLICT (tier_name, function_name) DO NOTHING;
 -- PENGUASA PANEL tier
 INSERT INTO tier_permissions (tier_name, function_name, is_allowed)
 SELECT 'PENGUASA PANEL', function_name, 
-    CASE WHEN function_name IN ('adddev', 'addceo', 'broadcast', 'stopall') THEN FALSE ELSE TRUE END
 FROM bot_functions
 ON CONFLICT (tier_name, function_name) DO NOTHING;
 
 -- TK tier
 INSERT INTO tier_permissions (tier_name, function_name, is_allowed)
 SELECT 'TK', function_name, 
-    CASE WHEN function_name IN ('adddev', 'addceo', 'addpenguasa', 'broadcast', 'stopall', 'delallsrv') THEN FALSE ELSE TRUE END
 FROM bot_functions
 ON CONFLICT (tier_name, function_name) DO NOTHING;
 
 -- PT tier
 INSERT INTO tier_permissions (tier_name, function_name, is_allowed)
 SELECT 'PT', function_name, 
-    CASE WHEN function_name IN ('adddev', 'addceo', 'addpenguasa', 'addtk', 'broadcast', 'stopall', 'delallsrv') THEN FALSE ELSE TRUE END
 FROM bot_functions
 ON CONFLICT (tier_name, function_name) DO NOTHING;
 
 -- OWNER GANTENG tier
 INSERT INTO tier_permissions (tier_name, function_name, is_allowed)
 SELECT 'OWNER GANTENG', function_name, 
-    CASE WHEN function_name IN ('adddev', 'addceo', 'addpenguasa', 'addtk', 'addpt', 'broadcast', 'stopall', 'delallsrv', 'delusr', 'delsrv') THEN FALSE ELSE TRUE END
 FROM bot_functions
 ON CONFLICT (tier_name, function_name) DO NOTHING;
 
 -- MEMBER VIP tier
 INSERT INTO tier_permissions (tier_name, function_name, is_allowed)
 SELECT 'MEMBER VIP', function_name, 
-    CASE WHEN function_name IN ('adddev', 'addceo', 'addpenguasa', 'addtk', 'addpt', 'addowgtng', 'broadcast', 'stopall', 'delallsrv', 'delusr', 'delsrv') THEN FALSE ELSE TRUE END
 FROM bot_functions
 ON CONFLICT (tier_name, function_name) DO NOTHING;
 
 -- OWN tier
 INSERT INTO tier_permissions (tier_name, function_name, is_allowed)
 SELECT 'OWN', function_name, 
-    CASE WHEN function_name IN ('adddev', 'addceo', 'addpenguasa', 'addtk', 'addpt', 'addowgtng', 'addmemvip', 'broadcast', 'stopall', 'delallsrv', 'delusr', 'delsrv', 'suspend', 'unsuspend') THEN FALSE ELSE TRUE END
 FROM bot_functions
 ON CONFLICT (tier_name, function_name) DO NOTHING;
 

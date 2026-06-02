@@ -46,7 +46,7 @@ export default function EmailSection({
       className="p-5"
     >
       {/* Active Identity Card */}
-      <div className="identity-card mb-4 border border-slate-300 bg-slate-100 shadow-none">
+      <div className="identity-card mb-4">
         <div className="flex justify-between items-start">
           <div className="section-label opacity-40">ACTIVE IDENTITY</div>
           {emailCreatedAt && (

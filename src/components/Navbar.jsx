@@ -306,8 +306,8 @@ export default function Navbar() {
           font-size: 12px;
           font-weight: 800;
           color: #fff;
-          background: linear-gradient(135deg, #34a4ff 0%, #0a84ff 100%);
-          box-shadow: 0 8px 18px rgba(10, 132, 255, 0.36);
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          box-shadow: 0 8px 18px rgba(99, 102, 241, 0.36);
         }
 
         .nav-desktop {
@@ -341,19 +341,19 @@ export default function Navbar() {
         }
 
         .nav-link:hover {
-          background: rgba(10, 132, 255, 0.1);
+          background: rgba(99, 102, 241, 0.1);
           color: var(--primary);
         }
 
         .nav-link:focus-visible {
-          outline: 2px solid var(--accent);
+          outline: 2px solid var(--primary);
           outline-offset: 2px;
         }
 
         .nav-link.active {
           color: #fff;
-          background: linear-gradient(135deg, #3ea0ff 0%, #0a84ff 100%);
-          box-shadow: 0 8px 18px rgba(10, 132, 255, 0.3);
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
         }
 
         .nav-actions {
@@ -382,7 +382,7 @@ export default function Navbar() {
 
         .nav-theme-toggle:hover {
           color: var(--primary);
-          background: rgba(10, 132, 255, 0.1);
+          background: rgba(99, 102, 241, 0.1);
         }
 
         .nav-theme-toggle:focus-visible,
@@ -416,10 +416,10 @@ export default function Navbar() {
         }
 
         .btn-signin {
-          color: var(--white) !important;
-          background: linear-gradient(135deg, #3ea0ff 0%, #0a84ff 100%) !important;
-          border-color: rgba(255, 255, 255, 0.62) !important;
-          box-shadow: 0 8px 18px rgba(10, 132, 255, 0.32);
+          color: #fff !important;
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+          border-color: transparent !important;
+          box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
         }
 
         /* Mobile Navigation */
@@ -442,7 +442,7 @@ export default function Navbar() {
         }
 
         .nav-menu-btn:hover {
-          background: rgba(10, 132, 255, 0.1);
+          background: rgba(99, 102, 241, 0.1);
           color: var(--primary);
         }
 
@@ -508,25 +508,25 @@ export default function Navbar() {
         }
 
         .nav-mobile-link:hover {
-          background: rgba(10, 132, 255, 0.12);
+          background: rgba(99, 102, 241, 0.12);
           color: var(--primary);
         }
 
         .nav-mobile-link:focus-visible {
-          background: rgba(10, 132, 255, 0.12);
+          background: rgba(99, 102, 241, 0.12);
           color: var(--primary);
         }
 
         .nav-mobile-link.active {
-          color: var(--white);
-          background: linear-gradient(135deg, #3ea0ff 0%, #0a84ff 100%);
+          color: #fff;
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
           font-weight: 700;
         }
 
         .nav-mobile-link.primary {
-          color: var(--white);
+          color: #fff;
           font-weight: 700;
-          background: linear-gradient(135deg, #3ea0ff 0%, #0a84ff 100%);
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
         }
 
         .nav-mobile-link.danger {

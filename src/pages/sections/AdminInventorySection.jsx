@@ -25,7 +25,7 @@ export default function AdminInventorySection({
 }) {
   return (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-      {/* ===== NODES SECTION ===== */}
+      
       <CardLayout className="mb-4" header={<div className="flex items-center gap-2"><Server size={16} style={{ color: 'var(--text-main)' }} /> Pterodactyl Nodes</div>}>
         {/* Add Node Form */}
         <div className="flex gap-3 items-center flex-wrap mb-4">
@@ -88,7 +88,7 @@ export default function AdminInventorySection({
         </div>
       </CardLayout>
 
-      {/* ===== EGGS SECTION ===== */}
+      
       <CardLayout className="mb-4" header={<div className="flex items-center gap-2"><Database size={16} style={{ color: 'var(--text-main)' }} /> Egg Templates</div>}>
         {/* Add Egg Form */}
         <div className="grid gap-2 mb-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
@@ -170,7 +170,7 @@ export default function AdminInventorySection({
         </div>
       </CardLayout>
 
-      {/* ===== INVENTORY SECTION ===== */}
+      
       <CardLayout header={<div className="flex items-center gap-2"><Plus size={15} /> Add Premium Account Stock</div>}>
         {/* Add Inventory Form */}
         <div className="flex gap-3 items-center flex-wrap mb-4">
